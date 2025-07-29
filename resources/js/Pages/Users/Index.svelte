@@ -41,7 +41,7 @@
 
 <h1 class="mb-8 text-3xl font-bold">Users</h1>
 <div class="mb-6 flex items-center justify-between">
-  <SearchFilter class="mr-4 w-full max-w-md" bind:value={form.search} on:reset={reset}>
+  <SearchFilter class="mr-4 w-full max-w-md" bind:value={form.search} onreset={reset}>
     <label for="role" class="block text-gray-700">Role:</label>
     <select id="role" class="form-select mt-1 w-full" bind:value={form.role}>
       <option value={null}></option>

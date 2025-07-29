@@ -46,7 +46,7 @@
 
     {#if !value}
       <div class="p-2">
-        <button type="button" class="x-4 rounded-xs bg-gray-500 py-1 text-xs font-medium text-white hover:bg-gray-700" on:click={browse}> Browse </button>
+        <button type="button" class="x-4 rounded-xs bg-gray-500 py-1 text-xs font-medium text-white hover:bg-gray-700" onclick={browse}> Browse </button>
       </div>
     {:else}
       <div class="flex items-center justify-between p-2">
@@ -54,7 +54,7 @@
           {value.name}
           <span class="text-xs text-gray-500">({filesize(value.size)})</span>
         </div>
-        <button type="button" class="rounded-xs bg-gray-500 px-4 py-1 text-xs font-medium text-white hover:bg-gray-700" on:click={remove}> Remove </button>
+        <button type="button" class="rounded-xs bg-gray-500 px-4 py-1 text-xs font-medium text-white hover:bg-gray-700" onclick={remove}> Remove </button>
       </div>
     {/if}
   </div>

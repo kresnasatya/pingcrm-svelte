@@ -40,7 +40,7 @@
 <div class={$$restProps.class}>
   <Label {label} {id} />
 
-  <textarea {...props} bind:this={input} class:error {id} {value} on:input={update} />
+  <textarea {...props} bind:this={input} class:error {id} {value} oninput={update} />
 
   {#if error}
     <div class="form-error">{error}</div>

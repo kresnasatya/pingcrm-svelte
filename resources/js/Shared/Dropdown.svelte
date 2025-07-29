@@ -44,7 +44,7 @@
   })
 </script>
 
-<svelte:window on:keydown={keydown} />
+<svelte:window onkeydown={keydown} />
 
 <button {...restProps} bind:this={button} type="button" onclick={() => (show = true)}>
   {@render children()}
