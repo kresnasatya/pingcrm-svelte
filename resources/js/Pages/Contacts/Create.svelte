@@ -1,15 +1,17 @@
-<script context="module">
+<script module>
   import Layout, { title } from '@/Shared/Layout.svelte'
   export const layout = Layout
 </script>
 
 <script>
+  import { preventDefault } from 'svelte/legacy';
+
   import { inertia, useForm } from '@inertiajs/svelte'
   import LoadingButton from '@/Shared/LoadingButton.svelte'
   import SelectInput from '@/Shared/SelectInput.svelte'
   import TextInput from '@/Shared/TextInput.svelte'
 
-  export let organizations = []
+  let { organizations = [] } = $props();
 
   $title = 'Create Contact'
 
@@ -36,12 +38,12 @@
   <span class="font-medium text-indigo-400">/</span> Create
 </h1>
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form on:submit|preventDefault={store}>
+  <form onsubmit={preventDefault(store)}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.first_name} error={$form.errors.first_name} class="w-full pb-8 pr-6 lg:w-1/2" label="First name:" />
       <TextInput bind:value={$form.last_name} error={$form.errors.last_name} class="w-full pb-8 pr-6 lg:w-1/2" label="Last name:" />
       <SelectInput bind:value={$form.organization_id} error={$form.errors.organization_id} class="w-full pb-8 pr-6 lg:w-1/2" label="Organization:">
-        <option value={null} />
+        <option value={null}></option>
         {#each organizations as organization (organization.id)}
           <option value={organization.id}>{organization.name}</option>
         {/each}
@@ -52,7 +54,7 @@
       <TextInput bind:value={$form.city} error={$form.errors.city} class="w-full pb-8 pr-6 lg:w-1/2" label="City:" />
       <TextInput bind:value={$form.region} error={$form.errors.region} class="w-full pb-8 pr-6 lg:w-1/2" label="Province/State:" />
       <SelectInput bind:value={$form.country} error={$form.errors.country} class="w-full pb-8 pr-6 lg:w-1/2" label="Country:">
-        <option value={null} />
+        <option value={null}></option>
         <option value="CA">Canada</option>
         <option value="US">United States</option>
       </SelectInput>

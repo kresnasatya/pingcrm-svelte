@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   import Layout, { title } from '@/Shared/Layout.svelte'
   export const layout = Layout
 </script>

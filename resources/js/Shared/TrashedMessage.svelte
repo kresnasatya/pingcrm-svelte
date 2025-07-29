@@ -1,6 +1,13 @@
 <script>
   import { createEventDispatcher } from 'svelte'
   import Icon from '@/Shared/Icon.svelte'
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
 
   const dispatch = createEventDispatcher()
 
@@ -13,8 +20,8 @@
   <div class="flex items-center">
     <Icon name="trash" class="mr-2 h-4 w-4 shrink-0 fill-yellow-800" />
     <div class="text-sm font-medium text-yellow-800">
-      <slot />
+      {@render children?.()}
     </div>
   </div>
-  <button class="text-sm text-yellow-800 hover:underline" tabindex="-1" type="button" on:click={restore}> Restore </button>
+  <button class="text-sm text-yellow-800 hover:underline" tabindex="-1" type="button" onclick={restore}> Restore </button>
 </div>

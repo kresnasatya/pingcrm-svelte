@@ -1,9 +1,11 @@
-<script context="module">
+<script module>
   import Layout, { title } from '@/Shared/Layout.svelte'
   export const layout = Layout
 </script>
 
 <script>
+  import { run } from 'svelte/legacy';
+
   import { inertia, router } from '@inertiajs/svelte'
   import isEqual from 'lodash/isEqual'
   import mapValues from 'lodash/mapValues'
@@ -13,23 +15,24 @@
   import Pagination from '@/Shared/Pagination.svelte'
   import SearchFilter from '@/Shared/SearchFilter.svelte'
 
-  export let filters = {}
-  export let organizations = []
+  let { filters = {}, organizations = [] } = $props();
 
   $title = 'Organizations'
 
-  let form = {
+  let form = $state({
     search: filters.search,
     trashed: filters.trashed,
-  }
+  })
 
   const search = throttle((form) => {
     router.get('/organizations', pickBy(form), { preserveState: true })
   }, 150)
 
-  $: if (!isEqual(filters, form)) {
-    search(form)
-  }
+  run(() => {
+    if (!isEqual(filters, form)) {
+      search(form)
+    }
+  });
 
   function reset() {
     form = mapValues(form, () => null)
@@ -41,7 +44,7 @@
   <SearchFilter class="mr-4 w-full max-w-md" bind:value={form.search} on:reset={reset}>
     <label for="trashed" class="block text-gray-700">Trashed:</label>
     <select id="trashed" class="form-select mt-1 w-full" bind:value={form.trashed}>
-      <option value={null} />
+      <option value={null}></option>
       <option value="with">With Trashed</option>
       <option value="only">Only Trashed</option>
     </select>
@@ -53,11 +56,14 @@
 </div>
 <div class="overflow-x-auto rounded-md bg-white shadow-sm">
   <table class="w-full whitespace-nowrap">
-    <tr class="text-left font-bold">
-      <th class="px-6 pb-4 pt-6">Name</th>
-      <th class="px-6 pb-4 pt-6">City</th>
-      <th class="px-6 pb-4 pt-6" colspan="2">Phone</th>
-    </tr>
+    <thead>
+      <tr class="text-left font-bold">
+        <th class="px-6 pb-4 pt-6">Name</th>
+        <th class="px-6 pb-4 pt-6">City</th>
+        <th class="px-6 pb-4 pt-6" colspan="2">Phone</th>
+      </tr>
+    </thead>
+    <tbody>
     {#each organizations.data as organization (organization.id)}
       <tr class="focus-within:bg-gray-100 hover:bg-gray-100">
         <td class="border-t">
@@ -91,6 +97,7 @@
         <td class="border-t px-6 py-4" colspan="4">No organizations found.</td>
       </tr>
     {/if}
+    </tbody>
   </table>
 </div>
 <Pagination class="mt-6" links={organizations.links} />

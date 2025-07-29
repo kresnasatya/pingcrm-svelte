@@ -10,9 +10,7 @@ export default defineConfig({
       ssr: 'resources/js/ssr.js',
       refresh: true,
     }),
-    svelte({
-      prebundleSvelteLibraries: true,
-    }),
+    svelte(),
     tailwindcss()
   ],
 })

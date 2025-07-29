@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   import { writable } from 'svelte/store'
   export const title = writable(null)
 </script>
@@ -11,7 +11,7 @@
   import Logo from '@/Shared/Logo.svelte'
   import MainMenu from '@/Shared/MainMenu.svelte'
 
-  export let auth
+  let { auth, children } = $props();
 </script>
 
 <svelte:head>
@@ -29,9 +29,11 @@
           <svg class="h-6 w-6 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
-          <div slot="dropdown" class="mt-2 rounded-sm bg-indigo-800 px-8 py-4 shadow-lg">
-            <MainMenu />
-          </div>
+          {#snippet dropdown()}
+                    <div  class="mt-2 rounded-sm bg-indigo-800 px-8 py-4 shadow-lg">
+              <MainMenu />
+            </div>
+                  {/snippet}
         </Dropdown>
       </div>
       <div class="md:text-md flex w-full items-center justify-between border-b bg-white p-4 text-sm md:px-12 md:py-0">
@@ -44,11 +46,13 @@
             </div>
             <Icon name="cheveron-down" class="h-5 w-5 fill-gray-700 focus:fill-indigo-600 group-hover:fill-indigo-600" />
           </div>
-          <div slot="dropdown" class="mt-2 rounded-sm bg-white py-2 text-sm shadow-xl">
-            <a use:inertia href="/users/{auth.user.id}/edit" class="block px-6 py-2 hover:bg-indigo-500 hover:text-white"> My Profile </a>
-            <a use:inertia href="/users" class="block px-6 py-2 hover:bg-indigo-500 hover:text-white"> Manage Users </a>
-            <button use:inertia={{ href: '/logout', method: 'delete' }} class="block w-full px-6 py-2 text-left hover:bg-indigo-500 hover:text-white"> Logout </button>
-          </div>
+          {#snippet dropdown()}
+                    <div  class="mt-2 rounded-sm bg-white py-2 text-sm shadow-xl">
+              <a use:inertia href="/users/{auth.user.id}/edit" class="block px-6 py-2 hover:bg-indigo-500 hover:text-white"> My Profile </a>
+              <a use:inertia href="/users" class="block px-6 py-2 hover:bg-indigo-500 hover:text-white"> Manage Users </a>
+              <button use:inertia={{ href: '/logout', method: 'delete' }} class="block w-full px-6 py-2 text-left hover:bg-indigo-500 hover:text-white"> Logout </button>
+            </div>
+                  {/snippet}
         </Dropdown>
       </div>
     </div>
@@ -56,7 +60,7 @@
       <MainMenu class="hidden w-56 shrink-0 overflow-y-auto bg-indigo-800 p-12 md:block" />
       <div class="px-4 py-8 md:flex-1 md:overflow-y-auto md:p-12" scroll-region>
         <FlashMessages />
-        <slot />
+        {@render children?.()}
       </div>
     </div>
   </div>

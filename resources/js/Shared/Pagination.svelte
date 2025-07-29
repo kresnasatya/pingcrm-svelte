@@ -1,11 +1,11 @@
 <script>
   import { inertia } from '@inertiajs/svelte'
 
-  export let links = []
+  let { links = [], ...rest } = $props();
 </script>
 
 {#if links.length > 3}
-  <div class={`-mb-1 flex flex-wrap ${$$restProps.class || ''}`}>
+  <div class={`-mb-1 flex flex-wrap ${rest.class || ''}`}>
     {#each links as link, key (key)}
       {#if link.url === null}
         <div class="mb-1 mr-1 rounded-sm border px-4 py-3 text-sm leading-4 text-gray-400">

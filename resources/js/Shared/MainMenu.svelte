@@ -1,8 +1,10 @@
 <script>
   import { inertia, page } from '@inertiajs/svelte'
   import Icon from '@/Shared/Icon.svelte'
+  /** @type {{ [key: string]: any }} */
+  let { ...rest } = $props();
 
-  $: isUrl = (...urls) => {
+  let isUrl = $derived((...urls) => {
     let currentUrl = $page.url.substr(1)
 
     if (urls[0] === '') {
@@ -10,10 +12,10 @@
     }
 
     return urls.filter((url) => currentUrl.startsWith(url)).length
-  }
+  })
 </script>
 
-<div {...$$restProps}>
+<div {...rest}>
   <div class="mb-4">
     <a use:inertia href="/" class="group flex items-center py-3">
       <Icon name="dashboard" class="mr-2 h-4 w-4 {isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'}" />

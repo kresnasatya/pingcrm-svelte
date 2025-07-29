@@ -1,9 +1,11 @@
-<script context="module">
+<script module>
   import Layout, { title } from '@/Shared/Layout.svelte'
   export const layout = Layout
 </script>
 
 <script>
+  import { run, preventDefault } from 'svelte/legacy';
+
   import { router } from '@inertiajs/core'
   import { inertia, useForm } from '@inertiajs/svelte'
   import FileInput from '@/Shared/FileInput.svelte'
@@ -12,9 +14,11 @@
   import TextInput from '@/Shared/TextInput.svelte'
   import TrashedMessage from '@/Shared/TrashedMessage.svelte'
 
-  export let user = {}
+  let { user = {} } = $props();
 
-  $: $title = user ? `${user.first_name} ${user.last_name}` : null
+  run(() => {
+    $title = user ? `${user.first_name} ${user.last_name}` : null
+  });
 
   let form = useForm(`EditUser:${user.id}`, {
     _method: 'put',
@@ -63,21 +67,23 @@
 {/if}
 
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form on:submit|preventDefault={update}>
+  <form onsubmit={preventDefault(update)}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.first_name} error={$form.errors.first_name} class="w-full pb-8 pr-6 lg:w-1/2" label="First name:" />
       <TextInput bind:value={$form.last_name} error={$form.errors.last_name} class="w-full pb-8 pr-6 lg:w-1/2" label="Last name:" />
       <TextInput bind:value={$form.email} error={$form.errors.email} class="w-full pb-8 pr-6 lg:w-1/2" label="Email:" />
       <TextInput bind:value={$form.password} error={$form.errors.password} autocomplete="new-password" class="w-full pb-8 pr-6 lg:w-1/2" type="password" label="Password:" />
-      <SelectInput bind:value={$form.owner} error={$form.errors.owner} class="w-full pb-8 pr-6 lg:w-1/2" label="Owner:" let:selected>
-        <option value="1" selected={selected === true}>Yes</option>
-        <option value="0" selected={selected === false}>No</option>
-      </SelectInput>
+      <SelectInput bind:value={$form.owner} error={$form.errors.owner} class="w-full pb-8 pr-6 lg:w-1/2" label="Owner:" >
+        {#snippet children({ selected })}
+                <option value="1" selected={selected === true}>Yes</option>
+          <option value="0" selected={selected === false}>No</option>
+                      {/snippet}
+            </SelectInput>
       <FileInput bind:value={$form.photo} error={$form.errors.photo} class="w-full pb-8 pr-6 lg:w-1/2" accept="image/*" label="Photo:" />
     </div>
     <div class="flex items-center border-t border-gray-100 bg-gray-50 px-8 py-4">
       {#if !user.deleted_at}
-        <button class="text-red-600 hover:underline" tabindex="-1" type="button" on:click={destroy}> Delete User </button>
+        <button class="text-red-600 hover:underline" tabindex="-1" type="button" onclick={destroy}> Delete User </button>
       {/if}
 
       <LoadingButton loading={$form.processing} class="btn-indigo ml-auto" type="submit">Update User</LoadingButton>

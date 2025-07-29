@@ -1,3 +1,6 @@
+<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (dropdown to dropdown_1) making the component unusable -->
+<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (dropdown to dropdown_1) making the component unusable -->
+<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (dropdown to dropdown_1) making the component unusable -->
 <script>
   import { createPopper } from '@popperjs/core'
   import { onDestroy, tick } from 'svelte'

@@ -1,9 +1,12 @@
-<script context="module">
+
+<script module>
   import Layout, { title } from '@/Shared/Layout.svelte'
   export const layout = Layout
 </script>
 
 <script>
+  import { run, preventDefault } from 'svelte/legacy';
+
   import { router } from '@inertiajs/core'
   import { inertia, useForm } from '@inertiajs/svelte'
   import Icon from '@/Shared/Icon.svelte'
@@ -12,9 +15,11 @@
   import TextInput from '@/Shared/TextInput.svelte'
   import TrashedMessage from '@/Shared/TrashedMessage.svelte'
 
-  export let organization = {}
+  let { organization = {} } = $props();
 
-  $: $title = organization ? organization.name : null
+  run(() => {
+    $title = organization ? organization.name : null
+  });
 
   let form = useForm(`EditOrganization:${organization.id}`, {
     name: organization.name,
@@ -55,7 +60,7 @@
 {/if}
 
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form on:submit|preventDefault={update}>
+  <form onsubmit={preventDefault(update)}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.name} error={$form.errors.name} class="w-full pb-8 pr-6 lg:w-1/2" label="Name:" />
       <TextInput bind:value={$form.email} error={$form.errors.email} class="w-full pb-8 pr-6 lg:w-1/2" label="Email:" />
@@ -63,16 +68,18 @@
       <TextInput bind:value={$form.address} error={$form.errors.address} class="w-full pb-8 pr-6 lg:w-1/2" label="Address:" />
       <TextInput bind:value={$form.city} error={$form.errors.city} class="w-full pb-8 pr-6 lg:w-1/2" label="City:" />
       <TextInput bind:value={$form.region} error={$form.errors.region} class="w-full pb-8 pr-6 lg:w-1/2" label="Province/State:" />
-      <SelectInput bind:value={$form.country} error={$form.errors.country} class="w-full pb-8 pr-6 lg:w-1/2" label="Country:" let:selected>
-        <option value={null} />
-        <option value="CA" selected={selected === 'CA'}>Canada</option>
-        <option value="US" selected={selected === 'US'}>United States</option>
-      </SelectInput>
+      <SelectInput bind:value={$form.country} error={$form.errors.country} class="w-full pb-8 pr-6 lg:w-1/2" label="Country:" >
+        {#snippet children({ selected })}
+                <option value={null}></option>
+          <option value="CA" selected={selected === 'CA'}>Canada</option>
+          <option value="US" selected={selected === 'US'}>United States</option>
+                      {/snippet}
+            </SelectInput>
       <TextInput bind:value={$form.postal_code} error={$form.errors.postal_code} class="w-full pb-8 pr-6 lg:w-1/2" label="Postal code:" />
     </div>
     <div class="flex items-center border-t border-gray-100 bg-gray-50 px-8 py-4">
       {#if !organization.deleted_at}
-        <button class="text-red-600 hover:underline" tabindex="-1" type="button" on:click={destroy}> Delete Organization </button>
+        <button class="text-red-600 hover:underline" tabindex="-1" type="button" onclick={destroy}> Delete Organization </button>
       {/if}
 
       <LoadingButton loading={$form.processing} class="btn-indigo ml-auto" type="submit">Update Organization</LoadingButton>
@@ -83,11 +90,14 @@
 <h2 class="mt-12 text-2xl font-bold">Contacts</h2>
 <div class="mt-6 overflow-x-auto rounded-sm bg-white shadow-sm">
   <table class="w-full whitespace-nowrap">
-    <tr class="text-left font-bold">
-      <th class="px-6 pb-4 pt-6">Name</th>
-      <th class="px-6 pb-4 pt-6">City</th>
-      <th class="px-6 pb-4 pt-6" colspan="2">Phone</th>
-    </tr>
+    <thead>
+      <tr class="text-left font-bold">
+        <th class="px-6 pb-4 pt-6">Name</th>
+        <th class="px-6 pb-4 pt-6">City</th>
+        <th class="px-6 pb-4 pt-6" colspan="2">Phone</th>
+      </tr>
+    </thead>
+    <tbody>
     {#each organization.contacts as contact (contact.id)}
       <tr class="focus-within:bg-gray-100 hover:bg-gray-100">
         <td class="border-t">
@@ -121,5 +131,6 @@
         <td class="border-t px-6 py-4" colspan="4">No contacts found.</td>
       </tr>
     {/if}
+    </tbody>
   </table>
 </div>

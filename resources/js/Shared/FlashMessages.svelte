@@ -1,7 +1,7 @@
 <script>
   import { page } from '@inertiajs/svelte'
 
-  let show = true
+  let show = $state(true)
 
   function close() {
     show = false
@@ -16,7 +16,7 @@
       </svg>
       <div class="py-4 text-sm font-medium text-white">{$page.props.flash.success}</div>
     </div>
-    <button type="button" class="group mr-2 p-2" on:click={close}>
+    <button type="button" class="group mr-2 p-2" onclick={close}>
       <svg class="block h-2 w-2 fill-green-800 group-hover:fill-white" width="235.908" height="235.908" viewBox="278.046 126.846 235.908 235.908">
         <path
           d="M506.784 134.017c-9.56-9.56-25.06-9.56-34.62 0L396
@@ -52,7 +52,7 @@
         </div>
       {/if}
     </div>
-    <button type="button" class="group mr-2 p-2" on:click={close}>
+    <button type="button" class="group mr-2 p-2" onclick={close}>
       <svg class="block h-2 w-2 fill-red-800 group-hover:fill-white" width="235.908" height="235.908" viewBox="278.046 126.846 235.908 235.908">
         <path
           d="M506.784 134.017c-9.56-9.56-25.06-9.56-34.62 0L396
