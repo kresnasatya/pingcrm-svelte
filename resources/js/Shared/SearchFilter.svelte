@@ -1,25 +1,10 @@
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
 <script>
-  import { createEventDispatcher } from 'svelte'
   import Dropdown from '@/Shared/Dropdown.svelte'
 
-  export let value
-  export let maxWidth = 300
-
-  const dispatch = createEventDispatcher()
-
-  $: props = {
-    ...$$restProps,
-    class: `flex items-center ${$$restProps.class || ''}`,
-  }
+  let { children, onreset, value = $bindable(), maxWidth = 300, class: className, ...restProps } = $props()
 </script>
 
-<div {...props}>
+<div class="flex items-center {className}" {...restProps}>
   <div class="flex w-full rounded-sm bg-white shadow-sm">
     <Dropdown class="rounded-l border-r px-4 hover:bg-gray-100 focus:z-10 focus:border-white focus:ring-3 md:px-6" placement="bottom-start" autoclose={false}>
       <div class="flex items-baseline">
@@ -31,13 +16,15 @@
           />
         </svg>
       </div>
-      <div slot="dropdown" class="mt-2 w-screen rounded-sm bg-white px-4 py-6 shadow-xl" style="max-width: {maxWidth}px">
-        <slot />
-      </div>
+      {#snippet dropdown()}
+        <div class="mt-2 w-screen rounded-sm bg-white px-4 py-6 shadow-xl" style="max-width: {maxWidth}px">
+          {@render children()}
+        </div>
+      {/snippet}
     </Dropdown>
 
     <input class="focus:shadow-outline relative w-full rounded-r px-6 py-3" autocomplete="off" type="text" name="search" placeholder="Search…" bind:value />
   </div>
 
-  <button class="ml-3 text-sm text-gray-500 hover:text-gray-700 focus:text-indigo-500" type="button" on:click={() => dispatch('reset')}> Reset </button>
+  <button class="ml-3 text-sm text-gray-500 hover:text-gray-700 focus:text-indigo-500" type="button" onclick={() => onreset?.()}>Reset</button>
 </div>

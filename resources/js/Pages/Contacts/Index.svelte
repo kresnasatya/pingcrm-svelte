@@ -42,7 +42,7 @@
 
 <h1 class="mb-8 text-3xl font-bold">Contacts</h1>
 <div class="mb-6 flex items-center justify-between">
-  <SearchFilter class="mr-4 w-full max-w-md" bind:value={form.search} on:reset={reset}>
+  <SearchFilter class="mr-4 w-full max-w-md" bind:value={form.search} onreset={reset}>
     <label for="trashed" class="block text-gray-700">Trashed:</label>
     <select id="trashed" class="form-select mt-1 w-full" bind:value={form.trashed}>
       <option value={null}></option>

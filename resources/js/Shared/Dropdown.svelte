@@ -1,25 +1,19 @@
-<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (dropdown to dropdown_1) making the component unusable -->
-<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (dropdown to dropdown_1) making the component unusable -->
-<!-- @migration-task Error while migrating Svelte code: This migration would change the name of a slot (dropdown to dropdown_1) making the component unusable -->
 <script>
   import { createPopper } from '@popperjs/core'
   import { onDestroy, tick } from 'svelte'
 
-  export let placement = 'bottom-end'
-  export let autoclose = true
+  let { children, dropdown, placement = 'bottom-end', autoclose = true, ...restProps } = $props()
 
-  let button
-  let dropdown
-  let portal
-  let popper
-  let show = false
+  let button = $state()
+  let dropdownEl = $state()
+  let portal = $state()
+  let popper = $state()
+  let show = $state(false)
 
-  $: showDropdown(show)
-
-  async function showDropdown(show) {
+  $effect.pre(async () => {
     if (show) {
       await tick()
-      popper = createPopper(button, dropdown, {
+      popper = createPopper(button, dropdownEl, {
         placement: placement,
         modifiers: [
           {
@@ -36,7 +30,7 @@
       await tick()
       popper.destroy()
     }
-  }
+  })
 
   function keydown(e) {
     if (e.key === 'Escape') {
@@ -52,21 +46,19 @@
 
 <svelte:window on:keydown={keydown} />
 
-<button {...$$restProps} bind:this={button} type="button" on:click={() => (show = true)}>
-  <slot />
+<button {...restProps} bind:this={button} type="button" onclick={() => (show = true)}>
+  {@render children()}
 </button>
 
 {#if show}
   <div bind:this={portal}>
-    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
     <div
       style="position: fixed; top: 0; right: 0; left: 0; bottom: 0; z-index: 99998; background:
       black; opacity: .2"
-      on:click={() => (show = false)}
-    />
-    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-    <div bind:this={dropdown} style="position: absolute; z-index: 99999;" on:click|stopPropagation={() => (show = !autoclose)}>
-      <slot name="dropdown" />
+      onclick={() => (show = false)}
+    ></div>
+    <div bind:this={dropdownEl} style="position: absolute; z-index: 99999;" onclick={(e) => { e.stopPropagation(); show = !autoclose; }}>
+      {@render dropdown()}
     </div>
   </div>
 {/if}
