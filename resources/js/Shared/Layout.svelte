@@ -1,21 +1,17 @@
-<script module>
-  import { writable } from 'svelte/store'
-  export const title = writable(null)
-</script>
-
 <script>
-  import { inertia } from '@inertiajs/svelte'
+  import { inertia, page } from '@inertiajs/svelte'
   import Dropdown from '@/Shared/Dropdown.svelte'
   import FlashMessages from '@/Shared/FlashMessages.svelte'
   import Icon from '@/Shared/Icon.svelte'
   import Logo from '@/Shared/Logo.svelte'
   import MainMenu from '@/Shared/MainMenu.svelte'
 
-  let { auth, children } = $props();
+  let auth = $state($page.props.auth)
+  let { children, title = null } = $props()
 </script>
 
 <svelte:head>
-  <title>{$title ? `${$title} - Ping CRM` : 'Ping CRM'}</title>
+  <title>{title ? `${title} - Ping CRM` : 'Ping CRM'}</title>
 </svelte:head>
 
 <div class="md:flex md:flex-col">

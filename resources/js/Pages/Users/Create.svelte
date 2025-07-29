@@ -1,18 +1,10 @@
-<script module>
-  import Layout, { title } from '@/Shared/Layout.svelte'
-  export const layout = Layout
-</script>
-
 <script>
-  import { preventDefault } from 'svelte/legacy';
-
   import { inertia, useForm } from '@inertiajs/svelte'
   import FileInput from '@/Shared/FileInput.svelte'
   import LoadingButton from '@/Shared/LoadingButton.svelte'
   import SelectInput from '@/Shared/SelectInput.svelte'
   import TextInput from '@/Shared/TextInput.svelte'
-
-  $title = 'Create User'
+  import Layout from '../../Shared/Layout.svelte'
 
   let form = useForm('CreateUser', {
     first_name: null,
@@ -29,7 +21,8 @@
   }
 </script>
 
-<h1 class="mb-8 text-3xl font-bold">
+<Layout title="Create User">
+  <h1 class="mb-8 text-3xl font-bold">
   <a use:inertia href="/users" class="text-indigo-400 hover:text-indigo-600"> Users </a>
   <span class="font-medium text-indigo-400">/</span> Create
 </h1>
@@ -52,3 +45,4 @@
     </div>
   </form>
 </div>
+</Layout>
