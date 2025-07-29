@@ -75,11 +75,9 @@
       <TextInput bind:value={$form.email} error={$form.errors.email} class="w-full pb-8 pr-6 lg:w-1/2" label="Email:" />
       <TextInput bind:value={$form.password} error={$form.errors.password} autocomplete="new-password" class="w-full pb-8 pr-6 lg:w-1/2" type="password" label="Password:" />
       <SelectInput bind:value={$form.owner} error={$form.errors.owner} class="w-full pb-8 pr-6 lg:w-1/2" label="Owner:" >
-        {#snippet children({ selected })}
-                <option value="1" selected={selected === true}>Yes</option>
-          <option value="0" selected={selected === false}>No</option>
-                      {/snippet}
-            </SelectInput>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+      </SelectInput>
       <FileInput bind:value={$form.photo} error={$form.errors.photo} class="w-full pb-8 pr-6 lg:w-1/2" accept="image/*" label="Photo:" />
     </div>
     <div class="flex items-center border-t border-gray-100 bg-gray-50 px-8 py-4">

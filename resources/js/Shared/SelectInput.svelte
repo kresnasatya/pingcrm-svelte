@@ -1,41 +1,37 @@
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
 <script>
-  import { createEventDispatcher } from 'svelte'
   import { nanoid } from 'nanoid'
   import Label from '@/Shared/Label.svelte'
 
-  export let id = `select-input-${nanoid(5)}`
-  export let value
-  export let label
-  export let error
+  let {
+    children,
+    id = `select-input-${nanoid(5)}`,
+    value = $bindable(),
+    label,
+    error,
+    onchange,
+    ...restProps
+  } = $props()
 
   let input
 
   export const focus = () => input.focus()
 
-  $: props = {
-    ...$$restProps,
+  let selectProps = $derived({
+    ...restProps,
     class: 'form-select',
-  }
-
-  const dispatch = createEventDispatcher()
+  })
 
   function update(event) {
-    dispatch('change', event)
-    value = event.target.value
+    event.preventDefault()
+    value = typeof value === 'number' ? parseInt(event.target.value) : event.target.value
   }
 </script>
 
-<div class={$$restProps.class}>
+<div class={restProps.class}>
   <Label {label} {id} />
 
-  <select {...props} bind:this={input} class:error {id} {value} on:blur|preventDefault={update}>
-    <slot selected={value} />
+  <select {...selectProps} bind:this={input} class:error {id} bind:value onblur={update}>
+    {@render children()}
   </select>
 
   {#if error}

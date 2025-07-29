@@ -70,12 +70,10 @@
       <TextInput bind:value={$form.city} error={$form.errors.city} class="w-full pb-8 pr-6 lg:w-1/2" label="City:" />
       <TextInput bind:value={$form.region} error={$form.errors.region} class="w-full pb-8 pr-6 lg:w-1/2" label="Province/State:" />
       <SelectInput bind:value={$form.country} error={$form.errors.country} class="w-full pb-8 pr-6 lg:w-1/2" label="Country:" >
-        {#snippet children({ selected })}
-                <option value={null}></option>
-          <option value="CA" selected={selected === 'CA'}>Canada</option>
-          <option value="US" selected={selected === 'US'}>United States</option>
-                      {/snippet}
-            </SelectInput>
+        <option value={null}></option>
+        <option value="CA">Canada</option>
+        <option value="US">United States</option>
+      </SelectInput>
       <TextInput bind:value={$form.postal_code} error={$form.errors.postal_code} class="w-full pb-8 pr-6 lg:w-1/2" label="Postal code:" />
     </div>
     <div class="flex items-center border-t border-gray-100 bg-gray-50 px-8 py-4">
