@@ -32,7 +32,8 @@
     postal_code: contact.postal_code,
   })
 
-  function update() {
+  function update(e) {
+    e.preventDefault()
     $form.put(`/contacts/${contact.id}`)
   }
 
@@ -59,7 +60,7 @@
   <TrashedMessage v-if="contact.deleted_at" class="mb-6" on:restore={restore}>This contact has been deleted.</TrashedMessage>
 {/if}
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form onsubmit={preventDefault(update)}>
+  <form onsubmit={update}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.first_name} error={$form.errors.first_name} class="w-full pb-8 pr-6 lg:w-1/2" label="First name:" />
       <TextInput bind:value={$form.last_name} error={$form.errors.last_name} class="w-full pb-8 pr-6 lg:w-1/2" label="Last name:" />

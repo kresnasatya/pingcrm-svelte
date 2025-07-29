@@ -12,7 +12,8 @@
     remember: false,
   })
 
-  function login() {
+  function login(e) {
+    e.preventDefault()
     $form.post('/login')
   }
 </script>
@@ -24,7 +25,7 @@
 <div class="flex min-h-screen items-center justify-center bg-indigo-800 p-6">
   <div class="w-full max-w-md">
     <Logo class="mx-auto block w-full max-w-xs fill-white" height="50" />
-    <form class="mt-8 overflow-hidden rounded-lg bg-white shadow-xl" onsubmit={preventDefault(login)}>
+    <form class="mt-8 overflow-hidden rounded-lg bg-white shadow-xl" onsubmit={login}>
       <div class="px-10 py-12">
         <h1 class="text-center text-3xl font-bold">Welcome Back!</h1>
         <div class="mx-auto mt-6 w-24 border-b-2"></div>

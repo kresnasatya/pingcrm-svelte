@@ -30,7 +30,8 @@
     photo: null,
   })
 
-  function update() {
+  function update(e) {
+    e.preventDefault()
     $form.post(`/users/${user.id}`, {
       onSuccess: () => $form.reset('password', 'photo'),
     })
@@ -67,7 +68,7 @@
 {/if}
 
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form onsubmit={preventDefault(update)}>
+  <form onsubmit={update}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.first_name} error={$form.errors.first_name} class="w-full pb-8 pr-6 lg:w-1/2" label="First name:" />
       <TextInput bind:value={$form.last_name} error={$form.errors.last_name} class="w-full pb-8 pr-6 lg:w-1/2" label="Last name:" />

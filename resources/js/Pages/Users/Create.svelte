@@ -23,7 +23,8 @@
     photo: null,
   })
 
-  function store() {
+  function store(e) {
+    e.preventDefault()
     $form.post('/users')
   }
 </script>
@@ -34,7 +35,7 @@
 </h1>
 
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form onsubmit={preventDefault(store)}>
+  <form onsubmit={store}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.first_name} error={$form.errors.first_name} class="w-full pb-8 pr-6 lg:w-1/2" label="First name:" />
       <TextInput bind:value={$form.last_name} error={$form.errors.last_name} class="w-full pb-8 pr-6 lg:w-1/2" label="Last name:" />

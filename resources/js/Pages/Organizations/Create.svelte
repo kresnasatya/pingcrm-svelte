@@ -24,7 +24,8 @@
     postal_code: null,
   })
 
-  function store() {
+  function store(e) {
+    e.preventDefault()
     $form.post('/organizations')
   }
 </script>
@@ -35,7 +36,7 @@
 </h1>
 
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form onsubmit={preventDefault(store)}>
+  <form onsubmit={store}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.name} error={$form.errors.name} class="w-full pb-8 pr-6 lg:w-1/2" label="Name:" />
       <TextInput bind:value={$form.email} error={$form.errors.email} class="w-full pb-8 pr-6 lg:w-1/2" label="Email:" />

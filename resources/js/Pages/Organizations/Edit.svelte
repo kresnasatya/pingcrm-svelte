@@ -32,7 +32,8 @@
     postal_code: organization.postal_code,
   })
 
-  function update() {
+  function update(e) {
+    e.preventDefault()
     $form.put(`/organizations/${organization.id}`)
   }
 
@@ -60,7 +61,7 @@
 {/if}
 
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
-  <form onsubmit={preventDefault(update)}>
+  <form onsubmit={update}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.name} error={$form.errors.name} class="w-full pb-8 pr-6 lg:w-1/2" label="Name:" />
       <TextInput bind:value={$form.email} error={$form.errors.email} class="w-full pb-8 pr-6 lg:w-1/2" label="Email:" />
