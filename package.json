@@ -12,7 +12,7 @@
   "dependencies": {
     "@inertiajs/svelte": "^2.0.17",
     "@popperjs/core": "^2.11.0",
-    "lodash": "^4.17.21",
+    "es-toolkit": "^1.39.8",
     "nanoid": "^5.0.7"
   },
   "devDependencies": {

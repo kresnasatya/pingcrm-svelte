@@ -1,9 +1,9 @@
 <script>
   import { inertia, router } from '@inertiajs/svelte'
-  import isEqual from 'lodash/isEqual'
-  import mapValues from 'lodash/mapValues'
-  import pickBy from 'lodash/pickBy'
-  import throttle from 'lodash/throttle'
+  import { isEqual } from 'es-toolkit'
+  import { mapValues } from 'es-toolkit'
+  import { pickBy } from 'es-toolkit'
+  import { throttle } from 'es-toolkit'
   import Icon from '@/Shared/Icon.svelte'
   import SearchFilter from '@/Shared/SearchFilter.svelte'
   import Layout from '@/Shared/Layout.svelte'
