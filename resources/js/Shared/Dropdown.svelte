@@ -40,7 +40,9 @@
 
   onDestroy(() => {
     popper && popper.destroy()
-    portal && document.body.removeChild(portal)
+    if (portal && portal.parentNode === document.body) {
+      portal && document.body.removeChild(portal)
+    }
   })
 </script>
 
