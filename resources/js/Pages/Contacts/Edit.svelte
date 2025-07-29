@@ -57,7 +57,7 @@
   {contact.last_name}
 </h1>
 {#if contact.deleted_at}
-  <TrashedMessage v-if="contact.deleted_at" class="mb-6" on:restore={restore}>This contact has been deleted.</TrashedMessage>
+  <TrashedMessage class="mb-6" on:restore={restore}>This contact has been deleted.</TrashedMessage>
 {/if}
 <div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
   <form onsubmit={update}>
