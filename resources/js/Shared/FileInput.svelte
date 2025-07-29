@@ -1,32 +1,31 @@
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
 <script>
   import { nanoid } from 'nanoid'
   import Label from '@/Shared/Label.svelte'
 
-  export let id = `file-input-${nanoid(5)}`
-  export let value
-  export let label
-  export let accept
-  export let errors = []
+  let {
+    id = `file-input-${nanoid(5)}`,
+    value = $bindable(),
+    label,
+    accept,
+    errors = [],
+    ...restProps
+  } = $props()
 
-  let files
+  let files = $state()
   let input
 
   export const browse = () => input.click()
 
-  $: props = {
-    ...$$restProps,
+  const inputProps = $derived({
+    ...restProps,
     class: 'form-input p-0',
-  }
+  })
 
-  $: error = errors !== undefined && errors.length > 0
+  const error = $derived(errors !== undefined && errors.length > 0)
 
-  $: value = files ? files[0] : null
+  $effect(() => {
+    value = files ? files[0] : null
+  })
 
   function filesize(size) {
     var i = Math.floor(Math.log(size) / Math.log(1024))
@@ -35,13 +34,17 @@
 
   function remove() {
     files = null
+    // Clear the input value to allow re-uploading the same file
+    if (input) {
+      input.value = ''
+    }
   }
 </script>
 
-<div class={$$restProps.class}>
+<div class={restProps.class}>
   <Label {label} {id} />
 
-  <div {...props} class:error>
+  <div {...inputProps} class:error>
     <input bind:this={input} bind:files class="hidden" type="file" {id} {accept} />
 
     {#if !value}
