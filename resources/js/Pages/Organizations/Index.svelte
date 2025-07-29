@@ -51,7 +51,7 @@
     <span class="hidden md:inline">Organization</span>
   </a>
 </div>
-<div class="overflow-x-auto rounded-md bg-white shadow">
+<div class="overflow-x-auto rounded-md bg-white shadow-sm">
   <table class="w-full whitespace-nowrap">
     <tr class="text-left font-bold">
       <th class="px-6 pb-4 pt-6">Name</th>
@@ -64,7 +64,7 @@
           <a use:inertia href="/organizations/{organization.id}/edit" class="flex items-center px-6 py-4 focus:text-indigo-500">
             {organization.name}
             {#if organization.deleted_at}
-              <Icon name="trash" class="ml-2 h-3 w-3 flex-shrink-0 fill-gray-400" />
+              <Icon name="trash" class="ml-2 h-3 w-3 shrink-0 fill-gray-400" />
             {/if}
           </a>
         </td>

@@ -51,7 +51,7 @@
     <span class="hidden md:inline">&nbsp;Contact</span>
   </a>
 </div>
-<div class="overflow-x-auto rounded-md bg-white shadow">
+<div class="overflow-x-auto rounded-md bg-white shadow-sm">
   <table class="w-full whitespace-nowrap">
     <tr class="text-left font-bold">
       <th class="px-6 pb-4 pt-6">Name</th>

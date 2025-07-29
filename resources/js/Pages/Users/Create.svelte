@@ -31,7 +31,7 @@
   <span class="font-medium text-indigo-400">/</span> Create
 </h1>
 
-<div class="max-w-3xl overflow-hidden rounded-md bg-white shadow">
+<div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
   <form on:submit|preventDefault={store}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.first_name} error={$form.errors.first_name} class="w-full pb-8 pr-6 lg:w-1/2" label="First name:" />

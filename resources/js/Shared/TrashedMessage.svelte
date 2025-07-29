@@ -9,7 +9,7 @@
   }
 </script>
 
-<div class="flex max-w-3xl items-center justify-between rounded bg-yellow-400 p-4">
+<div class="flex max-w-3xl items-center justify-between rounded-sm bg-yellow-400 p-4">
   <div class="flex items-center">
     <Icon name="trash" class="mr-2 h-4 w-4 shrink-0 fill-yellow-800" />
     <div class="text-sm font-medium text-yellow-800">

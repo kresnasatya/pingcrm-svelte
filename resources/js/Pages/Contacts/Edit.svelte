@@ -55,7 +55,7 @@
 {#if contact.deleted_at}
   <TrashedMessage v-if="contact.deleted_at" class="mb-6" on:restore={restore}>This contact has been deleted.</TrashedMessage>
 {/if}
-<div class="max-w-3xl overflow-hidden rounded-md bg-white shadow">
+<div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
   <form on:submit|preventDefault={update}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.first_name} error={$form.errors.first_name} class="w-full pb-8 pr-6 lg:w-1/2" label="First name:" />

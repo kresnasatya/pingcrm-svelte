@@ -9,7 +9,7 @@
 </script>
 
 {#if $page.props.flash.success && show}
-  <div class="mb-8 flex max-w-3xl items-center justify-between rounded bg-green-500">
+  <div class="mb-8 flex max-w-3xl items-center justify-between rounded-sm bg-green-500">
     <div class="flex items-center">
       <svg class="ml-4 mr-2 h-4 w-4 shrink-0 fill-white" viewBox="0 0 20 20">
         <polygon points="0 11 2 9 7 14 18 3 20 5 7 18" />
@@ -31,7 +31,7 @@
 {/if}
 
 {#if $page.props.flash.error || (Object.keys($page.props.errors).length > 0 && show)}
-  <div class="mb-8 flex max-w-3xl items-center justify-between rounded bg-red-500">
+  <div class="mb-8 flex max-w-3xl items-center justify-between rounded-sm bg-red-500">
     <div class="flex items-center">
       <svg class="ml-4 mr-2 h-4 w-4 shrink-0 fill-white" viewBox="0 0 20 20">
         <path

@@ -14,8 +14,8 @@
 </script>
 
 <div {...props}>
-  <div class="flex w-full rounded bg-white shadow">
-    <Dropdown class="rounded-l border-r px-4 hover:bg-gray-100 focus:z-10 focus:border-white focus:ring md:px-6" placement="bottom-start" autoclose={false}>
+  <div class="flex w-full rounded-sm bg-white shadow-sm">
+    <Dropdown class="rounded-l border-r px-4 hover:bg-gray-100 focus:z-10 focus:border-white focus:ring-3 md:px-6" placement="bottom-start" autoclose={false}>
       <div class="flex items-baseline">
         <span class="hidden text-gray-700 md:inline">Filter</span>
         <svg class="h-2 w-2 fill-gray-700 md:ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 961.243 599.998">
@@ -25,7 +25,7 @@
           />
         </svg>
       </div>
-      <div slot="dropdown" class="mt-2 w-screen rounded bg-white px-4 py-6 shadow-xl" style="max-width: {maxWidth}px">
+      <div slot="dropdown" class="mt-2 w-screen rounded-sm bg-white px-4 py-6 shadow-xl" style="max-width: {maxWidth}px">
         <slot />
       </div>
     </Dropdown>

@@ -1,7 +1,41 @@
-@import 'tailwindcss/base';
+@import 'tailwindcss';
+@import './buttons.css' layer(components);
+@import './form.css' layer(components);
 
-@import 'tailwindcss/components';
-@import 'buttons';
-@import 'form';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.svelte';
 
-@import 'tailwindcss/utilities';
+@theme {
+  --color-indigo-100: #e6e8ff;
+  --color-indigo-300: #b2b7ff;
+  --color-indigo-400: #7886d7;
+  --color-indigo-500: #6574cd;
+  --color-indigo-600: #5661b3;
+  --color-indigo-800: #2f365f;
+  --color-indigo-900: #191e38;
+
+  --font-sans:
+    'Cerebri Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}

@@ -54,7 +54,7 @@
   <TrashedMessage class="mb-6" on:restore={restore}>This organization has been deleted.</TrashedMessage>
 {/if}
 
-<div class="max-w-3xl overflow-hidden rounded-md bg-white shadow">
+<div class="max-w-3xl overflow-hidden rounded-md bg-white shadow-sm">
   <form on:submit|preventDefault={update}>
     <div class="-mb-8 -mr-6 flex flex-wrap p-8">
       <TextInput bind:value={$form.name} error={$form.errors.name} class="w-full pb-8 pr-6 lg:w-1/2" label="Name:" />
@@ -81,7 +81,7 @@
 </div>
 
 <h2 class="mt-12 text-2xl font-bold">Contacts</h2>
-<div class="mt-6 overflow-x-auto rounded bg-white shadow">
+<div class="mt-6 overflow-x-auto rounded-sm bg-white shadow-sm">
   <table class="w-full whitespace-nowrap">
     <tr class="text-left font-bold">
       <th class="px-6 pb-4 pt-6">Name</th>
