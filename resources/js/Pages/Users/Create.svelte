@@ -4,7 +4,7 @@
   import LoadingButton from '@/Shared/LoadingButton.svelte'
   import SelectInput from '@/Shared/SelectInput.svelte'
   import TextInput from '@/Shared/TextInput.svelte'
-  import Layout from '../../Shared/Layout.svelte'
+  import Layout from '@/Shared/Layout.svelte'
 
   let form = useForm('CreateUser', {
     first_name: null,
