@@ -1,5 +1,4 @@
 <script>
-  import { run } from 'svelte/legacy';
   import { inertia, router } from '@inertiajs/svelte'
   import isEqual from 'lodash/isEqual'
   import mapValues from 'lodash/mapValues'
@@ -21,7 +20,7 @@
     router.get('/users', pickBy(form), { preserveState: true })
   }, 150)
 
-  run(() => {
+  $effect(() => {
     if (!isEqual(filters, form)) {
       search(form)
     }
