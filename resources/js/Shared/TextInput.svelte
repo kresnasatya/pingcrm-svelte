@@ -1,38 +1,30 @@
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
-<!-- @migration-task Error while migrating Svelte code: migrating this component would require adding a `$props` rune but there's already a variable named props.
-     Rename the variable and try again or migrate by hand. -->
 <script>
   import { nanoid } from 'nanoid'
   import Label from '@/Shared/Label.svelte'
 
-  export let id = `text-input-${nanoid(5)}`
-  export let value
-  export let label
-  export let type = 'text'
-  export let error
+  let {
+    id = `text-input-${nanoid(5)}`,
+    class: className,
+    value = $bindable(),
+    label,
+    type = 'text',
+    error
+  } = $props()
 
   let input
 
   export const focus = () => input.focus()
   export const select = () => input.select()
 
-  $: props = {
-    ...$$restProps,
-    class: 'form-input',
-  }
-
   function update(event) {
     value = event.target.value
   }
 </script>
 
-<div class={$$restProps.class}>
+<div class={className}>
   <Label {label} {id} />
 
-  <input {...props} bind:this={input} class:error {id} {type} {value} on:input={update} />
+  <input bind:this={input} class="form-input" class:error {id} {type} bind:value oninput={update} />
 
   {#if error}
     <div class="form-error">{error}</div>
