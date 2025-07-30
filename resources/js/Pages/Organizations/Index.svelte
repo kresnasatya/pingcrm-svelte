@@ -17,7 +17,7 @@
   })
 
   const search = throttle((form) => {
-    router.get('/organizations', pickBy(form), { preserveState: true })
+    router.get('/organizations', pickBy(form, (value) => value !== null && value !== ''), { preserveState: true })
   }, 150)
 
   $effect(() => {
