@@ -26,10 +26,10 @@
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
           {#snippet dropdown()}
-                    <div  class="mt-2 rounded-sm bg-indigo-800 px-8 py-4 shadow-lg">
+            <div class="mt-2 rounded-sm bg-indigo-800 px-8 py-4 shadow-lg">
               <MainMenu />
             </div>
-                  {/snippet}
+          {/snippet}
         </Dropdown>
       </div>
       <div class="md:text-md flex w-full items-center justify-between border-b bg-white p-4 text-sm md:px-12 md:py-0">

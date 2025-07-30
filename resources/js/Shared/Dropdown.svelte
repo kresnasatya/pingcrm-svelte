@@ -1,34 +1,30 @@
+<!-- Dropdown.svelte -->
 <script>
-  import { createPopper } from '@popperjs/core'
+  import { computePosition, flip, shift, offset } from '@floating-ui/dom'
   import { onDestroy, tick } from 'svelte'
 
   let { children, dropdown, placement = 'bottom-end', autoclose = true, ...restProps } = $props()
 
   let button = $state()
   let dropdownEl = $state()
-  let portal = $state()
-  let popper = $state()
   let show = $state(false)
 
   $effect.pre(async () => {
-    if (show) {
+    if (show && button && dropdownEl) {
       await tick()
-      popper = createPopper(button, dropdownEl, {
+
+      // Use Floating UI to position the dropdown
+      const { x, y } = await computePosition(button, dropdownEl, {
         placement: placement,
-        modifiers: [
-          {
-            name: 'preventOverflow',
-            options: {
-              altBoundary: true,
-            },
-          },
-        ],
+        middleware: [
+          offset(4),
+          flip(),
+          shift({ padding: 8 })
+        ]
       })
 
-      document.body.appendChild(portal)
-    } else if (popper) {
-      await tick()
-      popper.destroy()
+      dropdownEl.style.left = `${x}px`
+      dropdownEl.style.top = `${y}px`
     }
   })
 
@@ -38,29 +34,35 @@
     }
   }
 
+  function handleClickOutside(e) {
+    // Not needed anymore since we have backdrop
+  }
+
   onDestroy(() => {
-    popper && popper.destroy()
-    if (portal && portal.parentNode === document.body) {
-      portal && document.body.removeChild(portal)
-    }
+    // No cleanup needed since we're not using portals
   })
 </script>
 
-<svelte:window onkeydown={keydown} />
+<svelte:window onkeydown={keydown} onclick={handleClickOutside} />
 
-<button {...restProps} bind:this={button} type="button" onclick={() => (show = true)}>
-  {@render children()}
-</button>
+<div style="position: relative; display: inline-block;">
+  <button {...restProps} bind:this={button} type="button" onclick={() => (show = true)}>
+    {@render children()}
+  </button>
 
-{#if show}
-  <div bind:this={portal}>
+  {#if show}
+    <!-- Backdrop -->
     <div
-      style="position: fixed; top: 0; right: 0; left: 0; bottom: 0; z-index: 99998; background:
-      black; opacity: .2"
+      style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: black; opacity: 0.2;"
       onclick={() => (show = false)}
     ></div>
-    <div bind:this={dropdownEl} style="position: absolute; z-index: 99999;" onclick={(e) => { e.stopPropagation(); show = !autoclose; }}>
+    <!-- Dropdown -->
+    <div
+      bind:this={dropdownEl}
+      style="position: fixed;"
+      onclick={(e) => { e.stopPropagation(); show = !autoclose; }}
+    >
       {@render dropdown()}
     </div>
-  </div>
-{/if}
+  {/if}
+</div>

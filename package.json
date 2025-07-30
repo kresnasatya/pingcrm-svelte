@@ -10,8 +10,8 @@
     "build": "vite build && vite build --ssr"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.2",
     "@inertiajs/svelte": "^2.0.17",
-    "@popperjs/core": "^2.11.0",
     "es-toolkit": "^1.39.8",
     "nanoid": "^5.0.7"
   },
