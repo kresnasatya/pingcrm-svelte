@@ -61,14 +61,20 @@
 
   {#if show}
     <!-- Backdrop -->
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
     <div
-      style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: black; opacity: 0.2;"
+      style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: black; opacity: 0.2; z-index: 1;"
       onclick={() => (show = false)}
+      aria-label="Close dropdown"
+      role="button"
+      tabindex="-1"
     ></div>
     <!-- Dropdown -->
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
       bind:this={dropdownEl}
-      style="position: fixed;"
+      style="position: fixed; z-index: 2;"
       onclick={(e) => { e.stopPropagation(); show = !autoclose; }}
     >
       {@render dropdown()}
