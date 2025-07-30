@@ -1,6 +1,6 @@
 <!-- Dropdown.svelte -->
 <script>
-  import { computePosition, flip, shift, offset } from '@floating-ui/dom'
+  import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom'
   import { onDestroy, tick } from 'svelte'
 
   let { children, dropdown, placement = 'bottom-end', autoclose = true, ...restProps } = $props()
@@ -8,23 +8,36 @@
   let button = $state()
   let dropdownEl = $state()
   let show = $state(false)
+  let cleanup = $state()
+
+  async function updatePosition() {
+    if (!button || !dropdownEl) return
+
+    const { x, y } = await computePosition(button, dropdownEl, {
+      placement: placement,
+      middleware: [
+        offset(4),
+        flip(),
+        shift({ padding: 8 })
+      ]
+    })
+
+    dropdownEl.style.left = `${x}px`
+    dropdownEl.style.top = `${y}px`
+  }
 
   $effect.pre(async () => {
     if (show && button && dropdownEl) {
       await tick()
 
-      // Use Floating UI to position the dropdown
-      const { x, y } = await computePosition(button, dropdownEl, {
-        placement: placement,
-        middleware: [
-          offset(4),
-          flip(),
-          shift({ padding: 8 })
-        ]
-      })
+      // Initial positioning
+      await updatePosition()
 
-      dropdownEl.style.left = `${x}px`
-      dropdownEl.style.top = `${y}px`
+      // Auto-update on scroll, resize, etc.
+      cleanup = autoUpdate(button, dropdownEl, updatePosition)
+    } else if (cleanup) {
+      cleanup()
+      cleanup = null
     }
   })
 
@@ -34,16 +47,12 @@
     }
   }
 
-  function handleClickOutside(e) {
-    // Not needed anymore since we have backdrop
-  }
-
   onDestroy(() => {
-    // No cleanup needed since we're not using portals
+    cleanup?.()
   })
 </script>
 
-<svelte:window onkeydown={keydown} onclick={handleClickOutside} />
+<svelte:window onkeydown={keydown} />
 
 <div style="position: relative; display: inline-block;">
   <button {...restProps} bind:this={button} type="button" onclick={() => (show = true)}>
